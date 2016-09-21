@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Counter extends Component {
+class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = { counter: 0 };
@@ -27,3 +27,32 @@ export default class Counter extends Component {
   }
 }
 
+const withBackgroundColor = (color) => (Component) => {
+  return () => (
+    <div style={{background: color}}>
+      <Component />
+    </div>
+  );
+}
+
+const withPadding = (padding) => (Component) => {
+  return () => (
+    <div style={{padding}}>
+      <Component />
+    </div>
+  );
+}
+
+
+//
+// state doesn't get reset
+//
+// const wrapped = withPadding('10px')(Counter);
+// export default withBackgroundColor('green')(wrapped);
+
+//
+// state gets reset
+//
+export default withBackgroundColor('green')(
+  withPadding('10px')(Counter)
+);
